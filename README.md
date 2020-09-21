@@ -1,5 +1,5 @@
 # SiamNet-Tracking
-Simple SiamNet Tracking (pretrained SSD-MobileNet Detector + SiamNet Training and Test)
+Simple SiamNet Tracking (pretrained SSD-MobileNet Detector + SiamNet Training(Train  SiamNet ( CIFAR).jpynb) and Test (Detector +  SiamNet.jpynb))
 
 Модель GoTurn ттрекинга : слежение через обученную нейросеть сеть по OpenCV  имеет низкую производительность . Кроме того , строит слежение за одним объектом. в задаче MOT (Multy Object Tracking) нужно пререзапускать с каждым объектом отдельно или  держать n трекеров (память).
 
@@ -8,9 +8,10 @@ Simple SiamNet Tracking (pretrained SSD-MobileNet Detector + SiamNet Training an
  - матчинг объектов через обученную нейросеть сиамского типа
  
 ## Этапы:
-### 1. Обучение siamNet (обучаю на очень простой форме сверточную части сиамской сети, т.к. нужно просто обесмпечить решениен задачи обработки кадров):
+### 1.  Обучение siamNet (Train  SiamNet ( CIFAR).jpynb):
+Обучаем на очень простой форме сверточную части сиамской сети, т.к. нужно просто обесмпечить решениен задачи обработки кадров):
   - обучаем на CIFAR100
-  - конструкция сверточной части сиама построена как результат сеточного поиска с целью получить минимальную ошибку классификации и используем только сверточную часть модели : Input((32,32,3))-Conv2D(32,(5,5),'relu')-Conv2D(32,(3,3),'relu')-Maxpooling()-Conv2D(32,(3,3),'relu')-Conv2D(32,(5,5),'relu')-Maxpooling()-
+  - конструкция сверточной части сиама построена как результат сеточного поиска с целью получить минимальную ошибку классификации и используем только сверточную часть модели : Input((32,32,3))-Conv2D(32,(5,5),'relu')-Conv2D(32,(3,3),'relu')-Maxpooling()-Conv2D(32,(3,3),'relu')-Conv2D(32,(5,5),'relu')-Maxpooling()-Flatten
   - аугментация данных для обучения: Dataset for SiamNet Train:
 
     - 1th Imagei - cifar100, 2th Imagei + augmentation(cifar100) -> Label = 1
@@ -22,7 +23,7 @@ Simple SiamNet Tracking (pretrained SSD-MobileNet Detector + SiamNet Training an
   - сохраняем веса Сиамской сети в siam_net_weight.h5  
   - по итогам обучения создана функция для генерации модели сиамской сети: new_model = SiamNet_create(siam_weigth ='/content/SiamNet-Tracking/siam_net_weight.h5' ), в которую передаем веса сети siam_net_weight.h5
   
- ### 2. Строим трекеры:
+ ### 2. Строим трекеры (Detector +  SiamNet.jpynb):
     Вариант_2:
     - запускаем Детектор по tensorflow_hub (https://www.tensorflow.org/hub/tutorials/tf2_object_detection)
     - MobileNet-SSD
